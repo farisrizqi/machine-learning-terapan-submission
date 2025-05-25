@@ -113,9 +113,14 @@ Beberapa langkah yang dilakukan:
 ## 5. Modeling
 
 ### Pendekatan Model
-Karena permasalahan yang dihadapi adalah time series forecasting untuk curah hujan harian, maka model yang dipilih adalah LSTM (Long Short-Term Memory) — salah satu arsitektur Recurrent Neural Network (RNN) yang cocok untuk memproses data sekuensial atau temporal.
+Karena permasalahan yang dihadapi adalah time series forecasting untuk curah hujan harian, maka model yang dipilih adalah LSTM (Long Short-Term Memory) — salah satu arsitektur Recurrent Neural Network (RNN) yang cocok untuk memproses data sekuensial atau temporal. Berikut adalah gambar alur logika dari arsitektur model LSTM.
 
-### Arsitektur Model
+<p align="center">
+  <img src="https://miro.medium.com/v2/resize%3Afit%3A1200/1%2AoJcSMhQZA3vr0P-kXz0SYA.png" alt="Arsitektur Model LSTM" width="500"/>
+</p>
+
+
+### Arsitektur Model yang digunakan
 - Input shape: (timesteps, features) → misalnya (30, 5)
 - Hidden layer: 1 LSTM layer dengan 64 unit
 - Output layer: 1 unit untuk prediksi curah hujan
