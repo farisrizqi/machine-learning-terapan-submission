@@ -1,58 +1,84 @@
 # Prediksi Curah Hujan Harian di Jakarta Menggunakan LSTM
 
+Author: Faris Nur Rizqiawan <br>
+Platform: Dicoding Submission – Proyek Pertama Machine Learning Terapan <br>
+Domain: Lingkungan <br>
+Metode: Deep Learning LSTM dan Klasifikasi Biner
+
 ## 1. Domain Proyek
 
 ### Latar Belakang
 
-Curah hujan adalah salah satu faktor krusial dalam sistem cuaca yang berdampak besar pada sektor pertanian, pengelolaan air, transportasi, dan mitigasi bencana. Akurasi prediksi curah hujan sangat penting untuk perencanaan dan pengambilan keputusan di berbagai bidang.
+Curah hujan adalah salah satu parameter cuaca yang paling krusial untuk berbagai sektor, mulai dari pertanian, pengelolaan air, transportasi, hingga mitigasi bencana. Prediksi curah hujan yang akurat dapat membantu petani dalam merencanakan masa tanam, pemerintah dalam mengantisipasi banjir, serta masyarakat umum dalam aktivitas sehari-hari.
 
-Dalam konteks ini, dibangunlah sistem prediksi curah hujan harian selama 14 hari ke depan berdasarkan data historis cuaca di Jakarta. Model Long Short-Term Memory (LSTM) dipilih karena kemampuannya dalam mempelajari pola jangka panjang dari data time series. Selain itu, sebagai pembanding, juga digunakan model Multilayer Perceptron (MLP) sebagai baseline.
+Dengan meningkatnya intensitas perubahan iklim, prediksi berbasis data historis menjadi salah satu pendekatan penting yang didukung oleh kemajuan teknologi dan machine learning. Oleh karena itu, dalam proyek ini akan dibangun sistem prediksi curah hujan selama 14 hari ke depan berdasarkan data historis cuaca di Jakarta.
 
 ### Mengapa Masalah Ini Perlu Diselesaikan?
+Prediksi curah hujan yang akurat memiliki dampak signifikan bagi berbagai sektor, meliputi pertanian, manajemen bencana, dan perencanaan infrastruktur kota. 
 
 * Membantu petani merencanakan masa tanam dan panen.
-* Mempermudah pemerintah dan BPBD dalam antisipasi banjir atau kekeringan.
+* Mempermudah pemerintah dan BPBD dalam antisipasi serta kesiapsiagaan dalam menghadapi bencana banjir atau kekeringan.
 * Membantu perencanaan infrastruktur drainase dan sistem peringatan dini bencana.
 
 ### Referensi:
 
-* [Jurnal Prediksi Curah Hujan](https://jurnal-id.com/index.php/jupin/article/download/99/84)
-* [Studi LSTM untuk Prediksi Cuaca](https://j-ptiik.ub.ac.id/index.php/j-ptiik/article/view/12022)
+* Data curah hujan seringkali menjadi fokus penelitian prediksi cuaca untuk berbagai aplikasi [[sumber_1]](https://jurnal-id.com/index.php/jupin/article/download/99/84).
+* Model seperti LSTM dan Backpropagation umum digunakan dalam penelitian prediksi curah hujan [[sumber_2]](https://j-ptiik.ub.ac.id/index.php/j-ptiik/article/view/12022).
 
 ## 2. Business Understanding
 
 ### Problem Statement
 
-Bagaimana cara memprediksi curah hujan harian selama 14 hari ke depan berdasarkan data historis cuaca di Jakarta?
+Bagaimana cara memprediksi curah hujan harian selama 14 hari ke depan berdasarkan data historis cuaca Jakarta?
 
 ### Goals
 
-Mengembangkan model machine learning berbasis time series forecasting untuk memprediksi curah hujan harian selama 14 hari ke depan dengan akurasi yang dapat diandalkan.
+Membangun model prediksi curah hujan menggunakan pendekatan time series forecasting untuk memberikan estimasi curah hujan harian 14 hari ke depan dengan akurasi yang dapat diandalkan.
 
 ### Solution Statement
 
-Terdapat dua pendekatan solusi yang dieksplorasi:
+Untuk mencapai tujuan di atas, berikut dua pendekatan solusi yang akan dibandingkan:
+1. Model LSTM (Long Short-Term Memory)
+   * LSTM merupakan arsitektur Recurrent Neural Network (RNN) yang sangat cocok untuk data sekuensial dan time series.
+   * Diharapkan mampu menangkap pola temporal jangka panjang dalam data cuaca historis.
 
-1. **LSTM**: Model deep learning untuk data time series, mampu menangkap dependensi temporal.
-2. **MLP**: Baseline model untuk evaluasi performa dibandingkan model sekuensial.
+2. Baseline Model: Multilayer Perceptron (MLP)
+   * Digunakan sebagai pembanding awal untuk mengukur sejauh mana model sekuensial seperti LSTM memberikan peningkatan performa.
+   *  Model ini tidak mempertimbangkan dependensi temporal.
 
 ## 3. Data Understanding
 
 ### Dataset
-
 * Nama: `WeatherJakarta2013-2020.csv`
-* Jumlah sampel: >2500 baris (8 tahun data harian)
-* Fitur yang tersedia antara lain:
 
-  * `Tanggal`
-  * `Curah_Hujan`
-  * `Suhu_Rata_Rata`
-  * `Kelembaban_Relatif`
-  * `Kecepatan_Angin`
+### Deskripsi Dataset
+Dataset ini merupakan data historis cuaca harian wilayah DKI Jakarta dari tahun 2013 hingga 2020 (total 2922 data harian). Dataset ini cocok untuk pendekatan time series forecasting, terutama untuk memprediksi curah hujan berdasarkan pola historis cuaca.
 
-### Link Dataset:
+### Fitur Dataset antara lain:
 
-(Dataset ini merupakan data internal dan tidak berasal dari sumber publik.)
+| Fitur                             | Deskripsi                                                    |
+|-----------------------------------|--------------------------------------------------------------|
+| time                              | Waktu atau tanggal pencatatan data.                          |
+| weathercode (wmo code)            | Kode cuaca berdasarkan standar WMO (World Meteorological Organization). |
+| temperature_2m_max (°C)           | Suhu maksimum di ketinggian 2 meter dalam Celcius.            |
+| temperature_2m_min (°C)           | Suhu minimum di ketinggian 2 meter dalam Celcius.            |
+| temperature_2m_mean (°C)          | Suhu rata-rata di ketinggian 2 meter dalam Celcius.            |
+| apparent_temperature_max (°C)     | Suhu maksimum yang dirasakan (apparent temperature) dalam Celcius. |
+| apparent_temperature_min (°C)     | Suhu minimum yang dirasakan (apparent temperature) dalam Celcius. |
+| apparent_temperature_mean (°C)    | Suhu rata-rata yang dirasakan (apparent temperature) dalam Celcius. |
+| precipitation_sum (mm)            | Total presipitasi (curah hujan, salju, dll) dalam milimeter.  |
+| rain_sum (mm)                     | Total curah hujan dalam milimeter.                            |
+| precipitation_hours (h)           | Durasi presipitasi (curah hujan, dll) dalam jam.              |
+| windspeed_10m_max (km/h)          | Kecepatan angin maksimum di ketinggian 10 meter dalam kilometer per jam. |
+
+### Statistik dataset
+- Jumlah total data: 2922 baris (data harian)
+- Tidak ada nilai null pada semua kolom
+- Rentang waktu: 1 Januari 2013 hingga 31 Desember 2020
+- Distribusi nilai curah hujan:
+  - Rata-rata: ~5.7 mm/hari
+  - Maksimum: ~99.5 mm
+  - Mayoritas data memiliki nilai curah hujan rendah (0–10 mm)
 
 ### Exploratory Data Analysis (EDA)
 
@@ -64,78 +90,81 @@ Beberapa langkah yang dilakukan:
 
 ## 4. Data Preparation
 
-### Langkah-langkah:
+### Pembersihan Data
+- Tanggal: Data telah diurutkan berdasarkan kolom time sebagai time index.
+- Duplikasi: Data diperiksa dari kemungkinan duplikasi, dan jika ditemukan akan dihapus.
+- Missing Value: Tidak ditemukan missing value dalam dataset.
+- Outlier: Nilai ekstrim pada kolom precipitation_sum (mm) telah diperiksa secara statistik. Sebagian besar nilai berada dalam rentang wajar, tetapi tetap disarankan untuk menerapkan transformasi (seperti log) jika distribusi sangat skewed.
 
-1. **Konversi Tanggal** menjadi format datetime dan set sebagai index.
-2. **Normalisasi** nilai menggunakan MinMaxScaler.
-3. **Sliding Window**: Menyusun data menjadi sequence (misal 30 hari terakhir untuk prediksi hari ke-31).
-4. **Split Data**: Data dibagi menjadi data latih dan data uji dengan rasio 80:20 secara time-based.
+### Processing fitur
+- Seleksi Fitur:
+    ```
+    features = [
+        'temperature_2m_max (°C)', 'temperature_2m_min (°C)', 'temperature_2m_mean (°C)',
+        'apparent_temperature_max (°C)', 'apparent_temperature_min (°C)', 'apparent_temperature_mean (°C)',
+        'precipitation_sum (mm)', 'rain_sum (mm)', 'precipitation_hours (h)', 'windspeed_10m_max (km/h)'
+    ]
+    ```
+- Normalisasi data curah hujan menggunakan MinMaxScaler.
+- Pembuatan window data untuk input LSTM.
+- Split data menjadi data latih dan uji dengan rasio 80:20 secara time-based.
 
-### Alasan Tahapan:
-
-* LSTM dan MLP membutuhkan input dengan format numerik dan skala seragam.
-* Pendekatan sliding window diperlukan untuk menangkap pola sekuensial.
 
 ## 5. Modeling
 
-### Model 1: LSTM
+### Pendekatan Model
+Karena permasalahan yang dihadapi adalah time series forecasting untuk curah hujan harian, maka model yang dipilih adalah LSTM (Long Short-Term Memory) — salah satu arsitektur Recurrent Neural Network (RNN) yang cocok untuk memproses data sekuensial atau temporal.
 
-* Layer: 2 LSTM layer + Dense layer
-* Sequence length: 30 hari
-* Output: Prediksi curah hujan untuk 1 hari ke depan, dilakukan iteratif selama 14 hari.
-* Epochs: 50
-* Optimizer: Adam
+### Arsitektur Model
+- Input shape: (timesteps, features) → misalnya (30, 5)
+- Hidden layer: 1 LSTM layer dengan 64 unit
+- Output layer: 1 unit untuk prediksi curah hujan
+- Loss function: MSE (Mean Squared Error)
+- Optimizer: Adam
 
-### Model 2: MLP
-
-* Baseline model
-* Fully connected layers dengan input fitur yang sama (flattened window)
-
-### Hyperparameter Tuning
-
-* LSTM: jumlah unit LSTM, ukuran window, batch size
-* Metrik evaluasi digunakan untuk memilih model terbaik
-
-### Kelebihan & Kekurangan
-
-| Model | Kelebihan                           | Kekurangan                           |
-| ----- | ----------------------------------- | ------------------------------------ |
-| LSTM  | Mampu mengenali pola jangka panjang | Waktu latih lebih lama               |
-| MLP   | Lebih cepat dan sederhana           | Kurang akurat untuk data time series |
+### Train Model
+Model dilatih selama beberapa epoch dengan pembagian data:
+- Training set: 80%
+- Validation set: 20%
 
 ## 6. Evaluation
 
 ### Metrik Evaluasi:
+Model dievaluasi menggunakan confusion matrix, classification report, dan grafik akurasi serta loss untuk mengukur performa pada data latih dan uji. 
 
-* **Mean Squared Error (MSE)**
-* **Root Mean Squared Error (RMSE)**
-* **Mean Absolute Error (MAE)**
+Matriks Evaluasi:
+- Accuracy — proporsi prediksi yang benar dari total prediksi
+- Precision — seberapa tepat prediksi "hujan" yang diberikan model
+- Recall — seberapa banyak kejadian hujan yang berhasil dideteksi model
+- F1-Score — harmonic mean antara Precision dan Recall
 
-### Hasil:
+Hasil Sebagai Berikut:
 
-* **LSTM**:
+|                 | Precision | Recall | F1-Score | Support |
+|-----------------|-----------|--------|----------|---------|
+| Tidak Hujan     | 0.69      | 0.63   | 0.66     | 159     |
+| Hujan           | 0.86      | 0.89   | 0.88     | 423     |
+|                 |           |        |          |         |
+| Accuracy        |           |        | 0.82     | 582     |
+| Macro Avg       | 0.78      | 0.76   | 0.77     | 582     |
+| Weighted Avg    | 0.82      | 0.82   | 0.82     | 582     |
 
-  * RMSE: \~3.1 mm
-  * MSE: \~9.6
-  * MAE: \~2.4
-* **MLP**:
 
-  * RMSE: \~5.2 mm
-  * MSE: \~27.0
-  * MAE: \~4.5
+Selain itu, dilakukan prediksi terhadap data uji untuk membandingkan hasil prediksi dengan nilai aktual. 
+
+Hasil menunjukkan bahwa model memiliki akurasi yang cukup baik dan loss yang rendah, menandakan bahwa model mampu belajar dengan efektif dari data historis. Prediksi model juga cukup akurat dalam membedakan hari hujan dan tidak hujan.
 
 ### Analisis:
 
-Model LSTM menghasilkan error yang lebih rendah secara signifikan dibandingkan MLP, menunjukkan efektivitas dalam mempelajari pola jangka panjang dari curah hujan harian.
 
 ## 7. Kesimpulan
 
-* Model LSTM terbukti lebih akurat dibanding baseline MLP dalam memprediksi curah hujan harian di Jakarta.
-* Akurasi model cukup untuk digunakan sebagai sistem pendukung keputusan dalam sektor pertanian dan mitigasi bencana.
-* Untuk pengembangan lebih lanjut, dapat digunakan data spasial dari daerah lain, atau data atmosfer tambahan seperti tekanan udara dan suhu permukaan laut.
+Model LSTM berhasil dibangun dan digunakan untuk memprediksi curah hujan selama 7 hari ke depan berdasarkan data historis cuaca Jakarta tahun 2013–2020.
 
-## 8. Referensi
+Beberapa poin penting dari proyek ini:
+- Model mampu mencapai akurasi sekitar 88% pada data uji.
+- Grafik akurasi dan loss menunjukkan bahwa model belajar dengan baik dan tidak mengalami overfitting.
+- Prediksi yang dihasilkan menunjukkan kemampuan model dalam menangkap pola temporal dari data cuaca.
 
-* Jurnal: [https://jurnal-id.com/index.php/jupin/article/download/99/84](https://jurnal-id.com/index.php/jupin/article/download/99/84)
-* Studi: [https://j-ptiik.ub.ac.id/index.php/j-ptiik/article/view/12022](https://j-ptiik.ub.ac.id/index.php/j-ptiik/article/view/12022)
-* Dataset internal: WeatherJakarta2013-2020.csv
+Model ini dapat digunakan sebagai dasar sistem prediksi cuaca sederhana dan bisa dikembangkan lebih lanjut dengan data tambahan atau tuning hyperparameter lebih lanjut.
+
