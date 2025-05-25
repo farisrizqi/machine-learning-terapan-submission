@@ -149,13 +149,9 @@ Hasil Sebagai Berikut:
 | Macro Avg       | 0.78      | 0.76   | 0.77     | 582     |
 | Weighted Avg    | 0.82      | 0.82   | 0.82     | 582     |
 
-
 Selain itu, dilakukan prediksi terhadap data uji untuk membandingkan hasil prediksi dengan nilai aktual. 
 
 Hasil menunjukkan bahwa model memiliki akurasi yang cukup baik dan loss yang rendah, menandakan bahwa model mampu belajar dengan efektif dari data historis. Prediksi model juga cukup akurat dalam membedakan hari hujan dan tidak hujan.
-
-### Analisis:
-
 
 ## 7. Kesimpulan
 
