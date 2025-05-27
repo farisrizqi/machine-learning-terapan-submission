@@ -50,6 +50,7 @@ Untuk mencapai tujuan di atas, berikut dua pendekatan solusi yang akan dibanding
 
 ### Dataset
 * Nama: `WeatherJakarta2013-2020.csv`
+* Link: https://drive.google.com/file/d/1KrA1J-Cmd89Kh-7_sSVpFEHIiJcgAatW/view?usp=sharing
 
 ### Deskripsi Dataset
 Dataset ini merupakan data historis cuaca harian wilayah DKI Jakarta dari tahun 2013 hingga 2020 (total 2922 data harian). Dataset ini cocok untuk pendekatan time series forecasting, terutama untuk memprediksi curah hujan berdasarkan pola historis cuaca.
@@ -105,7 +106,7 @@ Beberapa langkah yang dilakukan:
         'precipitation_sum (mm)', 'rain_sum (mm)', 'precipitation_hours (h)', 'windspeed_10m_max (km/h)'
     ]
     ```
-- Normalisasi data curah hujan menggunakan MinMaxScaler.
+- Proses ini dilakukan menggunakan StandardScaler() dari library sklearn.preprocessing yang di mana setiap fitur diubah agar memiliki rata-rata 0 dan standar deviasi 1.
 - Pembuatan window data untuk input LSTM.
 - Split data menjadi data latih dan uji dengan rasio 80:20 secara time-based.
 
