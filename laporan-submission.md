@@ -55,6 +55,15 @@ Untuk mencapai tujuan di atas, berikut dua pendekatan solusi yang akan dibanding
 ### Deskripsi Dataset
 Dataset ini merupakan data historis cuaca harian wilayah DKI Jakarta dari tahun 2013 hingga 2020 (total 2922 data harian). Dataset ini cocok untuk pendekatan time series forecasting, terutama untuk memprediksi curah hujan berdasarkan pola historis cuaca.
 
+### Statistik dataset
+- Jumlah total data: 2922 baris (data harian)
+- Tidak ada nilai null pada semua kolom
+- Rentang waktu: 1 Januari 2013 hingga 31 Desember 2020
+- Distribusi nilai curah hujan:
+  - Rata-rata: ~5.7 mm/hari
+  - Maksimum: ~99.5 mm
+  - Mayoritas data memiliki nilai curah hujan rendah (0–10 mm)
+
 ### Fitur Dataset antara lain:
 
 | Fitur                             | Deskripsi                                                    |
@@ -71,15 +80,6 @@ Dataset ini merupakan data historis cuaca harian wilayah DKI Jakarta dari tahun 
 | rain_sum (mm)                     | Total curah hujan dalam milimeter.                            |
 | precipitation_hours (h)           | Durasi presipitasi (curah hujan, dll) dalam jam.              |
 | windspeed_10m_max (km/h)          | Kecepatan angin maksimum di ketinggian 10 meter dalam kilometer per jam. |
-
-### Statistik dataset
-- Jumlah total data: 2922 baris (data harian)
-- Tidak ada nilai null pada semua kolom
-- Rentang waktu: 1 Januari 2013 hingga 31 Desember 2020
-- Distribusi nilai curah hujan:
-  - Rata-rata: ~5.7 mm/hari
-  - Maksimum: ~99.5 mm
-  - Mayoritas data memiliki nilai curah hujan rendah (0–10 mm)
 
 ### Exploratory Data Analysis (EDA)
 
