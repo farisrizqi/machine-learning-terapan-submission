@@ -107,7 +107,7 @@ Beberapa langkah yang dilakukan:
     ]
     ```
 - Standarisasi data fitur menggunakan `StandardScaler()` dari library `sklearn.preprocessing` yang di mana setiap fitur diubah agar memiliki rata-rata 0 dan standar deviasi 1.
-- Pembuatan window data untuk input LSTM dengan ukuran `WINDOW_SIZE = 14 `.
+- Pembuatan window data untuk input LSTM dengan ukuran `WINDOW_SIZE = 14`.
 - Split data menjadi data latih dan uji dengan rasio 80:20 secara time-based.
 
 
