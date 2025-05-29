@@ -120,13 +120,25 @@ Karena permasalahan yang dihadapi adalah time series forecasting untuk curah huj
   <img src="https://miro.medium.com/v2/resize%3Afit%3A1200/1%2AoJcSMhQZA3vr0P-kXz0SYA.png" alt="Arsitektur Model LSTM" width="500"/>
 </p>
 
+### Penjelasan Model LSTM
 
-### Arsitektur Model yang digunakan
+LSTM (Long Short-Term Memory) adalah jenis Recurrent Neural Network (RNN) yang dirancang untuk mengatasi masalah vanishing gradient. Arsitektur LSTM terdiri dari beberapa komponen utama:
+- **Forget Gate**: Menentukan informasi apa yang harus dilupakan dari cell state sebelumnya.
+- **Input Gate**: Memilih informasi baru yang akan ditambahkan ke cell state.
+- **Cell State**: Membawa informasi dari waktu sebelumnya, dimodifikasi oleh forget dan input gate.
+- **Output Gate**: Menentukan informasi yang akan dikirim ke hidden state berikutnya.
+
+### Parameter Model:
+- Loss function: `binary_crossentropy` (karena target klasifikasi hujan/tidak hujan)
+- Optimizer: `Adam`, learning rate = 0.001
+- Batch size: 32
+- Epochs: 30
+- Dropout: 0.3
+- EarlyStopping: `patience=5`, monitor loss
+- Input shape: (14, 10) berdasarkan WINDOW_SIZE = 14 dan jumlah fitur setelah preprocessing = 10
 - Input shape: (timesteps, features) → misalnya (30, 5)
 - Hidden layer: 1 LSTM layer dengan 64 unit
 - Output layer: 1 unit untuk prediksi curah hujan
-- Loss function: MSE (Mean Squared Error)
-- Optimizer: Adam
 
 ### Train Model
 Model dilatih selama beberapa epoch dengan pembagian data:
@@ -144,16 +156,20 @@ Matriks Evaluasi:
 - Recall — seberapa banyak kejadian hujan yang berhasil dideteksi model
 - F1-Score — harmonic mean antara Precision dan Recall
 
-Hasil Sebagai Berikut:
+Model dievaluasi menggunakan metrik klasifikasi untuk dua kelas: **"Tidak Hujan"** dan **"Hujan"**. Berikut hasil lengkapnya:
 
-|                 | Precision | Recall | F1-Score | Support |
-|-----------------|-----------|--------|----------|---------|
-| Tidak Hujan     | 0.69      | 0.63   | 0.66     | 159     |
-| Hujan           | 0.86      | 0.89   | 0.88     | 423     |
-|                 |           |        |          |         |
-| Accuracy        |           |        | 0.82     | 582     |
-| Macro Avg       | 0.78      | 0.76   | 0.77     | 582     |
-| Weighted Avg    | 0.82      | 0.82   | 0.82     | 582     |
+| Kelas        | Precision | Recall | F1-Score | Support |
+|--------------|-----------|--------|----------|---------|
+| Tidak Hujan  | 0.68      | 0.63   | 0.65     | 159     |
+| Hujan        | 0.86      | 0.89   | 0.88     | 423     |
+
+**Metrik Rata-Rata:**
+
+| Metrik       | Nilai     |
+|--------------|-----------|
+| Accuracy     | 0.82      |
+| Macro Avg    | 0.77 / 0.76 / 0.76 |
+| Weighted Avg | 0.81 / 0.82 / 0.81 |
 
 Selain itu, dilakukan prediksi terhadap data uji untuk membandingkan hasil prediksi dengan nilai aktual. 
 
@@ -161,12 +177,19 @@ Hasil menunjukkan bahwa model memiliki akurasi yang cukup baik dan loss yang ren
 
 ## 7. Kesimpulan
 
-Model LSTM berhasil dibangun dan digunakan untuk memprediksi curah hujan selama 7 hari ke depan berdasarkan data historis cuaca Jakarta tahun 2013–2020.
+Model LSTM berhasil dibangun dan digunakan untuk memprediksi kemungkinan terjadinya hujan pada hari ke-15 berdasarkan pola cuaca 14 hari sebelumnya, menggunakan data historis cuaca Jakarta tahun 2013–2020.
 
 Beberapa poin penting dari proyek ini:
-- Model mampu mencapai akurasi sekitar 88% pada data uji.
-- Grafik akurasi dan loss menunjukkan bahwa model belajar dengan baik dan tidak mengalami overfitting.
-- Prediksi yang dihasilkan menunjukkan kemampuan model dalam menangkap pola temporal dari data cuaca.
+
+- Model mampu mencapai **akurasi sekitar 82%** pada data uji, menunjukkan performa yang cukup baik dalam klasifikasi biner (hujan / tidak hujan).
+- Evaluasi metrik menunjukkan model sangat baik dalam mengenali kelas **"Hujan"** (F1-Score: 0.88), meskipun performa pada kelas **"Tidak Hujan"** masih bisa ditingkatkan.
+- Grafik akurasi dan loss selama pelatihan menunjukkan proses pembelajaran berjalan stabil tanpa indikasi overfitting.
+- Model mampu menangkap pola temporal dari data cuaca harian dan dapat dijadikan dasar pengembangan sistem prediksi cuaca sederhana.
+- Ke depannya, model ini dapat ditingkatkan dengan:
+  - Penambahan fitur cuaca lain (misalnya kelembapan, tekanan udara),
+  - Penyesuaian arsitektur dan hyperparameter (seperti jumlah unit, dropout, atau window size),
+  - Penggunaan model sekuensial lain seperti GRU atau Transformer untuk perbandingan performa.
+
 
 Model ini dapat digunakan sebagai dasar sistem prediksi cuaca sederhana dan bisa dikembangkan lebih lanjut dengan data tambahan atau tuning hyperparameter lebih lanjut.
 
