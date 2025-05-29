@@ -158,18 +158,14 @@ Matriks Evaluasi:
 
 Model dievaluasi menggunakan metrik klasifikasi untuk dua kelas: **"Tidak Hujan"** dan **"Hujan"**. Berikut hasil lengkapnya:
 
-| Kelas        | Precision | Recall | F1-Score | Support |
-|--------------|-----------|--------|----------|---------|
-| Tidak Hujan  | 0.68      | 0.63   | 0.65     | 159     |
-| Hujan        | 0.86      | 0.89   | 0.88     | 423     |
+| Kelas         | Precision | Recall | F1-Score | Support |
+|---------------|-----------|--------|----------|---------|
+| Tidak Hujan   | 0.68      | 0.63   | 0.65     | 159     |
+| Hujan         | 0.86      | 0.89   | 0.88     | 423     |
+| **Accuracy**  |           |        | **0.82** | **582** |
+| Macro Avg     | 0.77      | 0.76   | 0.76     | 582     |
+| Weighted Avg  | 0.81      | 0.82   | 0.81     | 582     |
 
-**Metrik Rata-Rata:**
-
-| Metrik       | Nilai     |
-|--------------|-----------|
-| Accuracy     | 0.82      |
-| Macro Avg    | 0.77 / 0.76 / 0.76 |
-| Weighted Avg | 0.81 / 0.82 / 0.81 |
 
 Selain itu, dilakukan prediksi terhadap data uji untuk membandingkan hasil prediksi dengan nilai aktual. 
 
