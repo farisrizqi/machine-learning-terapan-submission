@@ -121,24 +121,43 @@ Karena permasalahan yang dihadapi adalah time series forecasting untuk curah huj
 </p>
 
 ### Penjelasan Model LSTM
-
 LSTM (Long Short-Term Memory) adalah jenis Recurrent Neural Network (RNN) yang dirancang untuk mengatasi masalah vanishing gradient. Arsitektur LSTM terdiri dari beberapa komponen utama:
 - **Forget Gate**: Menentukan informasi apa yang harus dilupakan dari cell state sebelumnya.
 - **Input Gate**: Memilih informasi baru yang akan ditambahkan ke cell state.
 - **Cell State**: Membawa informasi dari waktu sebelumnya, dimodifikasi oleh forget dan input gate.
 - **Output Gate**: Menentukan informasi yang akan dikirim ke hidden state berikutnya.
 
-### Parameter Model:
+### Arsitektur Model:
+1. LSTM Layer
+    - Jumlah unit: 64
+    - Input shape: (WINDOW_SIZE, jumlah fitur)
+    - return_sequences: False
+      <br>Layer ini bertugas memproses urutan data cuaca harian dan mengekstraksi pola dari sekuens tersebut.
+
+2. Dropout Layer
+    - Dropout rate: 0.3
+      <br>Dropout digunakan untuk mencegah overfitting dengan mengabaikan secara acak beberapa neuron selama pelatihan.
+
+3. Dense Hidden Layer
+    - Jumlah unit: 32
+    - Fungsi aktivasi: ReLU (activation='relu')
+      <br>Layer ini berfungsi untuk menangkap hubungan non-linear sebelum masuk ke output.
+
+4. Dense Output Layer
+    - Jumlah unit: 1
+    - Fungsi aktivasi: Sigmoid (activation='sigmoid')
+      <br>Layer ini menghasilkan output probabilitas untuk klasifikasi biner: hujan atau tidak hujan.
+
+### Parameter Pelatihan Model:
 - Loss function: `binary_crossentropy` (karena target klasifikasi hujan/tidak hujan)
 - Optimizer: `Adam`, learning rate = 0.001
-- Batch size: 32
 - Epochs: 30
-- Dropout: 0.3
-- EarlyStopping: `patience=5`, monitor loss
-- Input shape: (14, 10) berdasarkan WINDOW_SIZE = 14 dan jumlah fitur setelah preprocessing = 10
-- Input shape: (timesteps, features) → misalnya (30, 5)
-- Hidden layer: 1 LSTM layer dengan 64 unit
-- Output layer: 1 unit untuk prediksi curah hujan
+- Batch size: 32
+- Validation split: 0.2 (20% dari data latih digunakan sebagai data validasi)
+- EarlyStopping:
+    - Monitor: val_loss
+    - Patience: 5
+    - restore_best_weights=True untuk mengambil bobot model terbaik selama pelatihan
 
 ### Train Model
 Model dilatih selama beberapa epoch dengan pembagian data:
